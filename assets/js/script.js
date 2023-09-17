@@ -11,13 +11,14 @@ var scoreEl = document.querySelector(".score");
 var initialsEl = document.querySelector(".initials");
 var submitBtn = document.querySelector(".submit");
 var timerEl = document.querySelector(".timer");
+var highScoresEl = document.querySelector(".high-scores");
 var timer;
 var numCorrectAnswers = 0;
 var timerCount = 5;
 var questionNumber = 0;
 var isComplete;
 var currentQuestion;
-
+var highScoreList = [];
 // Create question repository
 var questions = [
     {
@@ -34,15 +35,18 @@ var questions = [
         answers:{
             a: "or",
             b: "&&",
-            c: "||",
-            d: "+"}, 
-        rightAnswer: "c"
+            c: "++",
+            d: "||"}, 
+        rightAnswer: "d"
     }];
 
 
 // startGame function
 function startGame(){
     isComplete = false;
+    if(localStorage.getItem("highScoreList") != null){
+        highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+    }
     setupGameScreen();
     startTimer();
     displayQuestion();
@@ -57,7 +61,7 @@ function startTimer(){
         if (timerCount >= 0){
             if(isComplete && timerCount > 0){
                 clearInterval(timer);
-                gameOver();
+                
             }
         }
         if(timerCount === 0) {
@@ -96,7 +100,6 @@ function checkAnswer(target){
     }
     questionNumber++;
     if(questionNumber < questions.length){
-        console.log("this was called");
         var choicesId = document.getElementById("choices");
         while (choicesId.firstChild){
             choicesId.removeChild(choicesId.lastChild);
@@ -104,12 +107,29 @@ function checkAnswer(target){
         displayQuestion();
     }
     else{
+        isComplete = true;
         gameOver();
     }
 }
+function setupScoresScreen(){
+    finishedEl.style.display = 'none';
+    scoreEl.style.display = 'none';
+    initialsEl.style.display = 'none';
+    submitBtn.style.display = 'none';
+    highScoresEl.style.display = "";
+}
 
 // wrong answer function
-function incorrectAnswer(){
+function showScores(){
+    highScoreList.push({initials: initialsEl.value, score: numCorrectAnswers});
+    localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
+    console.log(highScoreList); 
+    setupScoresScreen();
+    highScoreList.forEach(item => {
+        var li = document.createElement('li');
+        li.textContent = `initials: ${item.initials} - score: ${item.score}`;
+        highScoresEl.appendChild(li);
+    })
 
 }
 
