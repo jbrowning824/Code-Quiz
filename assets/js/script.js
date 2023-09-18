@@ -142,6 +142,7 @@ function displayQuestion(){
     });
 }
 
+//check answer
 function checkAnswer(target){
     console.log(currentQuestion);
     if(currentQuestion.rightAnswer === target.id){
@@ -184,7 +185,7 @@ function showAsideHighScores() {
    }
    
 }
-// wrong answer function
+
 function showScores(){
     highScoreList.push({initials: initialsEl.value, score: numCorrectAnswers});
     localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
@@ -206,6 +207,7 @@ function gameOver() {
 
 // reset scores function
 
+//initialize game
 function init() {
  startScreen();
  if(localStorage.getItem("highScoreList") != null){
