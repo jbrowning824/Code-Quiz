@@ -9,6 +9,13 @@
 <body>
 <main>
 <!-- create div center of screen as start section -->
+<div class="scorelist">
+    <p onclick="showAsideHighScores()">View High Scores</p>
+    <ol class="high-scores-aside" id="high-scores-aside">
+
+    </ol>
+</div>
+
 <div class="container">
    
 <!-- h tag for title -->
@@ -21,11 +28,13 @@
 <button class="start start-screen">Start Game</button>
 
 <!-- create div in center of the page as question container set as hidden -->
-
+<div class="header">
 <!-- create p tag for questions -->
 <p class="question"></p>
 <p class="timer"></p>
+</div>
 <!-- create ordered list for mulitple choice -->
+<div class="content">
 <ol class="choices" id="choices">
 </ol>
 <!-- create hr -->
@@ -33,7 +42,7 @@
 <!-- create p tag for answer reslut -->
 <p class="result"></p>
 <!-- create div for end of game set to hidden -->
-
+</div>
 <!-- create h tag All Done -->
 <h2 class="finished">All Done!</h2>
 <!-- create p tag for score -->
@@ -45,8 +54,9 @@
 <!-- create hidden div for high scores -->
 
 <!-- create ol for list of highscores - maybe only keep top 10?? -->
-<ol class="high-scores" id="high-scores">
 
+
+<ol class="high-scores" id="high-scores"></ol>
 </ol>
 </div>
 </main>

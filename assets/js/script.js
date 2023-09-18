@@ -12,9 +12,10 @@ var initialsEl = document.querySelector(".initials");
 var submitBtn = document.querySelector(".submit");
 var timerEl = document.querySelector(".timer");
 var highScoresEl = document.querySelector(".high-scores");
+var asideHighScroesEl = document.querySelector(".high-scores-aside");
 var timer;
 var numCorrectAnswers = 0;
-var timerCount = 5;
+var timerCount = 600000;
 var questionNumber = 0;
 var isComplete;
 var currentQuestion;
@@ -38,6 +39,57 @@ var questions = [
             c: "++",
             d: "||"}, 
         rightAnswer: "d"
+    },
+    {
+        question: "if / ____ is a conditional statement",
+        answers:{
+            a: "else",
+            b: "then",
+            c: "while",
+            d: "next"}, 
+        rightAnswer: "a"
+    },
+    {
+        question: "Given arr = ['foo', 'Joe', '107'] what is the value of arr[2]?",
+        answers:{
+            a: "undefined",
+            b: "107",
+            c: "foo",
+            d: "Joe"}, 
+        rightAnswer: "b"
+    },
+    {
+        question: "How do you get a specific element by ID?",
+        answers:{
+            a: "document.getElementById()",
+            b: "element.getElementById()",
+            c: "docuemnt.getId()",
+            d: "window.getElementById()"}, 
+        rightAnswer: "a"
+    },
+    {
+        question: "True or False: function sayMyName() is never called:\
+         //displays users name \
+          function sayMyName(name) {\
+             \talert(name); \
+            } \
+            //runs on page load\
+            function init(){ \
+                sayMyName(\"Joe\");\
+            }",
+        answers:{
+            a: "True",
+            b: "False"},
+        rightAnswer: "a"
+    },
+    {
+        question: "What method adds a value to the begining of an array?",
+        answers:{
+            a: "pop",
+            b: "push",
+            c: "unshift",
+            d: "firstElement()"}, 
+        rightAnswer: "c"
     }];
 
 
@@ -64,7 +116,7 @@ function startTimer(){
                 
             }
         }
-        if(timerCount === 0) {
+        if(timerCount <= 0) {
             clearInterval(timer);
             isComplete = true;
             gameOver();
@@ -78,12 +130,13 @@ function displayQuestion(){
     questionEl.textContent = currentQuestion.question;
     var answerList = questions[questionNumber].answers;
     //console.log(Object.keys(answerList));
-    Object.keys(answerList).forEach((key, index) =>
+    Object.keys(answerList).forEach((key, index = 1) =>
     {
         var li = document.createElement('li')
         li.setAttribute('id',key);
+        li.setAttribute('class', 'listChoice')
         li.setAttribute('onClick',"checkAnswer(this)");
-        var text = document.createTextNode(answerList[key]);
+        var text = document.createTextNode(`${index+1}. ${answerList[key]}`);
         choicesEl.appendChild(li);
         li.appendChild(text);
     });
@@ -97,6 +150,7 @@ function checkAnswer(target){
     }
     else {
         resultEl.textContent="Wrong!";
+        timerCount -= 10;
     }
     questionNumber++;
     if(questionNumber < questions.length){
@@ -118,12 +172,22 @@ function setupScoresScreen(){
     submitBtn.style.display = 'none';
     highScoresEl.style.display = "";
 }
-
+function showAsideHighScores() {
+    if(localStorage.getItem("highScoreList") != null){
+        highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+        highScoreList.forEach(item, index => {
+            var li = document.createElement('li');
+            li.textContent = `${index+1}. ${item.initials} - ${item.score}`;
+            asideHighScroesEl.appendChild(li);
+        })
+    }
+   
+}
 // wrong answer function
 function showScores(){
     highScoreList.push({initials: initialsEl.value, score: numCorrectAnswers});
     localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
-    console.log(highScoreList); 
+ 
     setupScoresScreen();
     highScoreList.forEach(item => {
         var li = document.createElement('li');
