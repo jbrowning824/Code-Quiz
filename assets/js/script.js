@@ -13,9 +13,10 @@ var submitBtn = document.querySelector(".submit");
 var timerEl = document.querySelector(".timer");
 var highScoresEl = document.querySelector(".high-scores");
 var asideHighScroesEl = document.querySelector(".high-scores-aside");
+var loadContent = document.querySelector(".load-content");
 var timer;
 var numCorrectAnswers = 0;
-var timerCount = 600000;
+var timerCount = 60;
 var questionNumber = 0;
 var isComplete;
 var currentQuestion;
@@ -96,9 +97,8 @@ var questions = [
 // startGame function
 function startGame(){
     isComplete = false;
-    if(localStorage.getItem("highScoreList") != null){
-        highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
-    }
+
+
     setupGameScreen();
     startTimer();
     displayQuestion();
@@ -108,7 +108,7 @@ function startGame(){
 function startTimer(){
     timer = setInterval(() => {
         timerCount --;
-        timerEl.textContent = timerCount;
+        timerEl.textContent = "Time: " + timerCount;
         //check if all questions answered
         if (timerCount >= 0){
             if(isComplete && timerCount > 0){
@@ -172,15 +172,15 @@ function setupScoresScreen(){
     submitBtn.style.display = 'none';
     highScoresEl.style.display = "";
 }
+
 function showAsideHighScores() {
-    if(localStorage.getItem("highScoreList") != null){
-        highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
-        highScoreList.forEach(item, index => {
-            var li = document.createElement('li');
-            li.textContent = `${index+1}. ${item.initials} - ${item.score}`;
-            asideHighScroesEl.appendChild(li);
-        })
-    }
+   if (getComputedStyle(asideHighScroesEl).display === "none") {
+    console.log("called");
+    asideHighScroesEl.style.display = "block";
+   }
+   else {
+    asideHighScroesEl.style.display = "none";
+   }
    
 }
 // wrong answer function
@@ -207,18 +207,29 @@ function gameOver() {
 
 function init() {
  startScreen();
+ if(localStorage.getItem("highScoreList") != null){
+    var i = 1;
+    highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+    highScoreList.forEach(item => {
+        var li = document.createElement('li');
+        li.textContent = `${i}. ${item.initials} - ${item.score}`;
+        asideHighScroesEl.appendChild(li);
+        i++;
+    });
+}
 }
 
 function setupGameScreen(){
     titleEl.style.display = 'none';
     descEl.style.display = 'none';
     startBtn.style.display = 'none';
+    loadContent.style.display = 'none';
     questionEl.style.display = "";
     choicesEl.style.display = "";
     dividerEl.style.display = "";
     resultEl.style.display = "";
     timerEl.style.display = "";
-    timerEl.textContent = timerCount;
+    timerEl.textContent = "Time: " + timerCount;;
 }
 
 function setupGameOverScreen(){

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/style.css">
     <title>Document</title>
 </head>
@@ -17,17 +20,18 @@
 </div>
 
 <div class="container">
-   
+<div class="load-content">  
 <!-- h tag for title -->
-<h1 class="title start-screen">Game Title</h1>
+<h1 class="title start-screen">Coding Quiz Challenge</h1>
 <!-- p tag for description -->
-<p class="desc start-screen">Game rules</p>
+<p class="desc start-screen">Try to answer the following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your time by 10 seconds!</p>
 <!-- maybe show top 3 high scores before button?? -->
 
 <!-- button to start the game -->
 <button class="start start-screen">Start Game</button>
-
+</div>
 <!-- create div in center of the page as question container set as hidden -->
+<div class="question-section">
 <div class="header">
 <!-- create p tag for questions -->
 <p class="question"></p>
@@ -42,6 +46,7 @@
 <!-- create p tag for answer reslut -->
 <p class="result"></p>
 <!-- create div for end of game set to hidden -->
+</div>
 </div>
 <!-- create h tag All Done -->
 <h2 class="finished">All Done!</h2>
