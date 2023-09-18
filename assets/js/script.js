@@ -165,6 +165,7 @@ function checkAnswer(target){
         gameOver();
     }
 }
+
 function setupScoresScreen(){
     finishedEl.style.display = 'none';
     scoreEl.style.display = 'none';
